@@ -1,13 +1,10 @@
 //classe Defienieren
 
-class Grass{
-    //Funktion, Erzeugen von Objecten
-    constructor(x, y){
+class Lebewesen{
+    constructor(x,y){
         this.x = x;
         this.y = y;
         this.age = 0;
-        this.mutationCounter = 0;
-        this.matationtime = random(5, matrix.length);
 
         this.neibourghing =[
             [this.x - 1, this.y - 1],
@@ -19,13 +16,8 @@ class Grass{
             [this.x   , this.y + 1],
             [this.x + 1, this.y + 1],
         ];
-        
-        
     }
 
-    // Verhalten - Methoden (änlich wie funktionen)
-    
-    //methode zum vermehren
     chooseCell(searchCharacter){
         let found = [];
         for (let i in this.neibourghing){
@@ -42,6 +34,35 @@ class Grass{
         }   
         return found;
     }
+
+    getNewNeibourghing(){
+        this.neibourghing =[
+            [this.x - 1, this.y - 1],
+            [this.x   , this.y - 1],
+            [this.x + 1, this.y - 1],
+            [this.x - 1, this.y],
+            [this.x + 1, this.y],
+            [this.x - 1, this.y + 1],
+            [this.x   , this.y + 1],
+            [this.x + 1, this.y + 1],
+        ];
+    }
+
+
+}
+
+
+class Grass extends Lebewesen{
+    //Funktion, Erzeugen von Objecten
+    constructor(x, y){
+        super(x,y);
+        this.mutationCounter = 0;
+        this.matationtime = random(5, matrix.length);
+    }
+
+    // Verhalten - Methoden (änlich wie funktionen)
+    
+    //methode zum vermehren
 
     spread(){
         if (this.age >= 6){
@@ -555,7 +576,6 @@ class MutandGrass{
     }
 
     dead(){
-        
         for (let i in mutandgrassArr){
             if (this.x == mutandgrassArr[i].x && this.y == mutandgrassArr[i].y){
                 matrix[this.y][this.x] = 0;
