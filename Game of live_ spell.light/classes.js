@@ -111,36 +111,6 @@ class Grassfresser extends Lebewesen{
         this.cosectentEating = 0;
     }
 
-    getNewNeibourghing(){
-        this.neibourghing =[
-            [this.x - 1, this.y - 1],
-            [this.x   , this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x   , this.y + 1],
-            [this.x + 1, this.y + 1],
-        ];
-    }
-
-    chooseCell(searchCharacter){
-        this.getNewNeibourghing();
-        let found = [];
-        for (let i in this.neibourghing){
-            //hole position des nachbarfeldes
-            let x = this.neibourghing[i][0];
-            let y = this.neibourghing[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length){
-                // überprüfen ob das Feld leer ist
-                if (matrix[y][x] == searchCharacter){
-                    found.push(this.neibourghing[i])
-                }
-            }
-        }   
-        return found;
-    }
-
     eatOrMove(){
         if (this.energy > 0){
             let grassFields = this.chooseCell(1).concat(this.chooseCell(5));
@@ -225,55 +195,11 @@ class Grassfresser extends Lebewesen{
 }
 
 
-class Fleischfresser{
+class Fleischfresser extends Lebewesen{
     constructor(x, y){
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.hunger = 8;
         this.cosectentEating = 0;
-        
-        this.neibourghing =[
-            [this.x - 1, this.y - 1],
-            [this.x   , this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x   , this.y + 1],
-            [this.x + 1, this.y + 1],
-        ];
-        
-        
-    }
-
-    getNewNeibourghing(){
-        this.neibourghing =[
-            [this.x - 1, this.y - 1],
-            [this.x   , this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x   , this.y + 1],
-            [this.x + 1, this.y + 1],
-        ];
-    }
-
-    chooseCell(searchCharacter){
-        this.getNewNeibourghing();
-        let found = [];
-        for (let i in this.neibourghing){
-            //hole position des nachbarfeldes
-            let x = this.neibourghing[i][0];
-            let y = this.neibourghing[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length){
-                // überprüfen ob das Feld leer ist
-                if (matrix[y][x] == searchCharacter){
-                    found.push(this.neibourghing[i])
-                }
-            }
-        }   
-        return found;
     }
 
     eatOrMove(){
@@ -375,50 +301,9 @@ wizard class description:
     - lives infinitly
 */
 
-class Wisard{
+class Wisard extends Lebewesen{
     constructor(x, y){
-        this.x = x;
-        this.y = y;
-        this.neibourghing =[
-            [this.x - 1, this.y - 1],
-            [this.x   , this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x   , this.y + 1],
-            [this.x + 1, this.y + 1],
-        ];
-    }
-
-    getNewNeibourghing(){
-        this.neibourghing =[
-            [this.x - 1, this.y - 1],
-            [this.x   , this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x   , this.y + 1],
-            [this.x + 1, this.y + 1],
-        ];
-    }
-
-    chooseCell(searchCharacter){
-        this.getNewNeibourghing();
-        let found = [];
-        for (let i in this.neibourghing){
-            //hole position des nachbarfeldes
-            let x = this.neibourghing[i][0];
-            let y = this.neibourghing[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length){
-                // überprüfen ob das Feld leer ist
-                if (matrix[y][x] == searchCharacter){
-                    found.push(this.neibourghing[i])
-                }
-            }
-        }   
-        return found;
+        super(x, y);
     }
 
     moveOrTranzform(){
@@ -504,42 +389,10 @@ class Wisard{
 class description:
     spreads faster, dies after certen time
 */
-class MutandGrass{
+class MutandGrass extends Lebewesen{
     constructor(x, y){
-        this.x = x;
-        this.y = y;
-        this.age = 0;
+        super(x, y);
         this.ageIG = 0;
-
-        this.neibourghing =[
-            [this.x - 1, this.y - 1],
-            [this.x   , this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x   , this.y + 1],
-            [this.x + 1, this.y + 1],
-        ];
-        
-        
-    }
-
-    chooseCell(searchCharacter){
-        let found = [];
-        for (let i in this.neibourghing){
-            //hole position des nachbarfeldes
-            let x = this.neibourghing[i][0];
-            let y = this.neibourghing[i][1];
-            
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length){
-                // überprüfen ob das Feld leer ist
-                if (matrix[y][x] == searchCharacter){
-                    found.push(this.neibourghing[i])
-                }
-            }
-        }   
-        return found;
     }
 
     spread(){
