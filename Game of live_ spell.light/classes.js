@@ -104,24 +104,11 @@ class Grass extends Lebewesen{
 }
 
 
-class Grassfresser{
+class Grassfresser extends Lebewesen{
     constructor(x, y){
-        this.x = x;
-        this.y = y;
+        super(x,y)
         this.energy = 8;
         this.cosectentEating = 0;
-        
-        this.neibourghing =[
-            [this.x - 1, this.y - 1],
-            [this.x   , this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x   , this.y + 1],
-            [this.x + 1, this.y + 1],matrix[y][x]
-        ];
-        
     }
 
     getNewNeibourghing(){
