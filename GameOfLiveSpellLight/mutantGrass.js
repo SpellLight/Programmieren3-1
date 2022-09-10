@@ -1,4 +1,4 @@
-class MutandGrass extends Lebewesen {
+module.exports = class MutandGrass extends Lebewesen {
     constructor(x, y) {
         super(x, y);
         this.ageIG = 0;

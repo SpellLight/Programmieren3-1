@@ -1,4 +1,4 @@
-class Fleischfresser extends Lebewesen {
+module.exports = class Fleischfresser extends Lebewesen {
     constructor(x, y) {
         super(x, y);
         this.hunger = 8;

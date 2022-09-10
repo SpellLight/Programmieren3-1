@@ -7,7 +7,7 @@ wizard class description:
     - lives infinitly
 */
 
-class Wisard extends Lebewesen {
+module.exports = class Wisard extends Lebewesen {
     constructor(x, y) {
         super(x, y);
     }

@@ -9,13 +9,19 @@ let matrix = [
 ];
 */
 
+const Lebewesen = require("./LebewesenClass")
+const Grass = require("./GrassClass");
+const Grassfresser = require("./grassFresserClass");
+const Fleischfresser = require("./fleichFresserClass");
+const MutandGrass = require("./mutantGrass");
+const Wizard = require("./wizardClass");
 
 let matrix = [];
 function getRandMatrix(x, y){
     for (let i = 0; i < y; i++){
         let arr = [];
         for (let j = 0; j < x; j++){
-            let r = round(random(0, 6));
+            let r = Math.round(random(0, 6));
             switch(r){
                 case 0:
                     arr.push(0);
@@ -79,7 +85,7 @@ function checkRed(){
 let side = 10;
 
 function setup(){
-    frameRate(5);
+    //frameRate(5);
 
     getRandMatrix(50, 50)
 
@@ -136,34 +142,16 @@ function draw(){
     for (let i in mutandgrassArr){
         mutandgrassArr[i].spread();
     }
-
+    
     for (let y = 0; y < matrix.length; y++){
+        console.log("\n");
         for (let x = 0; x < matrix[y].length; x++){
-            switch (matrix[y][x]){
-                case 0:
-                    fill ("gray")
-                    break;
-                case 1:
-                    fill ("green")
-                    break;
-                case 2:
-                    fill ("yellow")
-                    break;
-                case 3:
-                    fill("red")
-                    break;
-                case 4:
-                    fill("orange")
-                    break;
-                case 5:
-                    fill("lightgreen")
-                    break;
-                default:
-                    console.error("Object not found")
-                    console.log(matrix[y][x])
-            }
-
-            rect(x * side, y * side, side, side);
+            console.log(matrix[y][x])
+            console.log("position: ",x, y);
         }
+        
     }
 }
+
+setup();
+setInterval(draw(), 1000);
