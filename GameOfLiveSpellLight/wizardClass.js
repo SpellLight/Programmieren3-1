@@ -6,6 +6,10 @@ wizard class description:
     - only matix.length/20 wizards per game (randomly placed)
     - lives infinitly
 */
+const Lebewesen = require("./LebewesenClass")
+const Grass = require("./GrassClass");
+const Grassfresser = require("./grassFresserClass");
+
 
 module.exports = class Wisard extends Lebewesen {
     constructor(x, y) {
@@ -26,7 +30,7 @@ module.exports = class Wisard extends Lebewesen {
                 matrix[this.y][this.x] = 0;
 
                 function ifIsGrass() {
-                    let posNewWizardObj = grassAndEmptyFields[round(random(0, grassAndEmptyFields.length - 1))];
+                    let posNewWizardObj = grassAndEmptyFields[Math.floor(Math.random() * grassAndEmptyFields.length)];
                     let x = posNewWizardObj[0];
                     let y = posNewWizardObj[1];
 

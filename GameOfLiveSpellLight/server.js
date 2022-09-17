@@ -9,19 +9,32 @@ let matrix = [
 ];
 */
 
+const express = require("express");
+const app = express();
+
+let server = require('http').Server(app);
+let io = require('socket.io')(server);
+
+app.use(express.static("./"));
+
+app.get("/", function (req, res) {
+    //index.html
+    res.redirect("index.html");
+});
+
 const Lebewesen = require("./LebewesenClass")
 const Grass = require("./GrassClass");
 const Grassfresser = require("./grassFresserClass");
 const Fleischfresser = require("./fleichFresserClass");
 const MutandGrass = require("./mutantGrass");
-const Wizard = require("./wizardClass");
+const Wisard = require("./wizardClass");
 
-let matrix = [];
+matrix = [];
 function getRandMatrix(x, y){
     for (let i = 0; i < y; i++){
         let arr = [];
         for (let j = 0; j < x; j++){
-            let r = Math.round(random(0, 6));
+            let r = Math.floor(Math.random() * 7);
             switch(r){
                 case 0:
                     arr.push(0);
@@ -53,8 +66,8 @@ function getRandMatrix(x, y){
         matrix.push(arr)
     }
     for (let i = 0; i < matrix.length / 20 + matrix[0].length / 20; i++){
-        let xW = round(random(0, matrix[0].length - 1))
-        let yW = round(random(0, matrix.length - 1))
+        let xW = Math.floor(Math.random() * matrix[0].length);
+        let yW = Math.floor(Math.random() * matrix.length);
         matrix[yW][xW] = 4;
     }
 }
@@ -63,11 +76,11 @@ function getRandMatrix(x, y){
 
 
 //lebewesen
-let grassArr = [];
-let mutandgrassArr = [];
-let grassfresserArr = [];
-let fleischFresserArr = [];
-let wizardArr = [];
+grassArr = [];
+mutandgrassArr = [];
+grassfresserArr = [];
+fleischFresserArr = [];
+wizardArr = [];
 
 
 function checkRed(){
@@ -87,10 +100,10 @@ let side = 10;
 function setup(){
     //frameRate(5);
 
-    getRandMatrix(50, 50)
+    getRandMatrix(10, 10);
 
-    createCanvas(matrix[0].length * side, matrix.length * side + 1);
-    background("#acacac")
+    //createCanvas(matrix[0].length * side, matrix.length * side + 1);
+    //background("#acacac")
 
     //lebewesen erzeugen:
 
@@ -122,6 +135,7 @@ function setup(){
 
 function draw(){
     //checkRed();
+    console.log("drew");
 
     for (let i in wizardArr){
         wizardArr[i].moveOrTranzform();
@@ -143,15 +157,19 @@ function draw(){
         mutandgrassArr[i].spread();
     }
     
+    /*
     for (let y = 0; y < matrix.length; y++){
-        console.log("\n");
         for (let x = 0; x < matrix[y].length; x++){
-            console.log(matrix[y][x])
-            console.log("position: ",x, y);
+            process.stdout.write(matrix[y][x] + " ");
+            //console.log("position: ",x, y);
         }
-        
     }
+    process.stdout.write("\n");
+    */
+   console.log(matrix);
 }
 
 setup();
-setInterval(draw(), 1000);
+setInterval(draw, 10000);
+
+server.listen(3000);

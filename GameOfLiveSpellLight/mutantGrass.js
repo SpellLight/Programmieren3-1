@@ -1,3 +1,5 @@
+const Lebewesen = require("./LebewesenClass")
+
 module.exports = class MutandGrass extends Lebewesen {
     constructor(x, y) {
         super(x, y);
@@ -9,7 +11,7 @@ module.exports = class MutandGrass extends Lebewesen {
             if (this.age >= 2) {
                 let emptyFields = this.chooseCell(0);
                 if (emptyFields.length > 0) {
-                    let posNewGrassObj = emptyFields[round(random(0, emptyFields.length - 1))];
+                    let posNewGrassObj = emptyFields[Math.floor(Math.random() * emptyFields.length)];
                     let grassObj = new MutandGrass(posNewGrassObj[0], posNewGrassObj[1]);
                     mutandgrassArr.push(grassObj);
                     matrix[posNewGrassObj[1]][posNewGrassObj[0]] = 5;

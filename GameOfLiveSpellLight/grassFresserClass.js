@@ -1,3 +1,5 @@
+const Lebewesen = require("./LebewesenClass")
+
 module.exports = class Grassfresser extends Lebewesen {
     constructor(x, y) {
         super(x, y)
@@ -12,7 +14,7 @@ module.exports = class Grassfresser extends Lebewesen {
 
                 matrix[this.y][this.x] = 0;
 
-                let posNewGrassObj = grassFields[round(random(0, grassFields.length - 1))];
+                let posNewGrassObj = grassFields[Math.floor(Math.random() * grassFields.length)];
                 this.x = posNewGrassObj[0];
                 this.y = posNewGrassObj[1];
                 this.grassEaten();
@@ -37,7 +39,7 @@ module.exports = class Grassfresser extends Lebewesen {
         let grassFields = this.chooseCell(0);
         if (grassFields.length > 0) {
             matrix[this.y][this.x] = 0;
-            let posNewGrassObj = grassFields[round(random(0, grassFields.length - 1))];
+            let posNewGrassObj = grassFields[Math.floor(Math.random() * grassFields.length)];
             this.x = posNewGrassObj[0];
             this.y = posNewGrassObj[1];
             matrix[this.y][this.x] = 2;
@@ -51,7 +53,7 @@ module.exports = class Grassfresser extends Lebewesen {
         if (this.cosectentEating >= 5) {
             let emptyFields = this.chooseCell(0);
             if (emptyFields.length > 0) {
-                let posNewGrassfresserObj = emptyFields[round(random(0, emptyFields.length - 1))];
+                let posNewGrassfresserObj = emptyFields[Math.floor(Math.random() * emptyFields.length)];
                 let grassfresserObj = new Grassfresser(posNewGrassfresserObj[0], posNewGrassfresserObj[1]);
                 grassfresserArr.push(grassfresserObj);
                 matrix[posNewGrassfresserObj[1]][posNewGrassfresserObj[0]] = 2;

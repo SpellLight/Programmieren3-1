@@ -1,9 +1,12 @@
+const Lebewesen = require("./LebewesenClass")
+const MutandGrass = require("./mutantGrass");
+
 module.exports = class Grass extends Lebewesen {
     //Funktion, Erzeugen von Objecten
     constructor(x, y) {
         super(x, y);
         this.mutationCounter = 0;
-        this.matationtime = random(5, matrix.length);
+        this.matationtime = Math.floor(Math.random() * matrix.length);
     }
 
     // Verhalten - Methoden (änlich wie funktionen)
@@ -14,7 +17,7 @@ module.exports = class Grass extends Lebewesen {
         if (this.age >= 6) {
             let emptyFields = this.chooseCell(0);
             if (emptyFields.length > 0) {
-                let posNewGrassObj = emptyFields[round(random(0, emptyFields.length - 1))];
+                let posNewGrassObj = emptyFields[Math.floor(Math.random() * emptyFields.length)];
                 let grassObj = new Grass(posNewGrassObj[0], posNewGrassObj[1]);
                 grassArr.push(grassObj);
                 matrix[posNewGrassObj[1]][posNewGrassObj[0]] = 1;
