@@ -22,6 +22,10 @@ app.get("/", function (req, res) {
     res.redirect("index.html");
 });
 
+server.listen(3000, function(){
+    console.log("Running on port 3000");
+});
+
 const Lebewesen = require("./LebewesenClass")
 const Grass = require("./GrassClass");
 const Grassfresser = require("./grassFresserClass");
@@ -83,33 +87,11 @@ fleischFresserArr = [];
 wizardArr = [];
 
 
-function checkRed(){
-    if (fleischFresserArr.length == 0){
-        for(let y = 0; y < matrix.length; y++){
-            for (let x = 0; x < matrix[y].length; x++){
-                if (matrix[y][x] == 3){
-                    matrix[y][x] = 0;
-                }
-            }
-        }
-    } 
-}
 
-let side = 10;
+
 
 function setup(){
-    //frameRate(5);
-
-    getRandMatrix(10, 10);
-
-    //createCanvas(matrix[0].length * side, matrix.length * side + 1);
-    //background("#acacac")
-
-    //lebewesen erzeugen:
-
-    //let grassObj = new Grass(1, 0);
-    //grassArr.push(grassObj);
-
+    getRandMatrix(50, 50);
     
     for (let y = 0; y < matrix.length; y++){
         for (let x = 0; x < matrix[y].length; x++){
@@ -135,8 +117,6 @@ function setup(){
 
 function draw(){
     //checkRed();
-    console.log("drew");
-
     for (let i in wizardArr){
         wizardArr[i].moveOrTranzform();
     }
@@ -157,19 +137,16 @@ function draw(){
         mutandgrassArr[i].spread();
     }
     
-    /*
-    for (let y = 0; y < matrix.length; y++){
-        for (let x = 0; x < matrix[y].length; x++){
-            process.stdout.write(matrix[y][x] + " ");
-            //console.log("position: ",x, y);
-        }
-    }
-    process.stdout.write("\n");
-    */
-   console.log(matrix);
+    io.sockets.emit("send matrix", matrix);
+    //console.log(matrix);
 }
 
-setup();
-setInterval(draw, 10000);
 
-server.listen(3000);
+io.on("conection", function(socket){
+    console.log("Client connected", socket);
+    io.sockets.emit("first send matrix", matrix);
+});
+
+setup();
+setInterval(draw, 1000);
+
