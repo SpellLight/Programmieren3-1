@@ -3,6 +3,7 @@ const Lebewesen = require("./LebewesenClass")
 module.exports = class Grassfresser extends Lebewesen {
     constructor(x, y) {
         super(x, y)
+        this.female = Math.floor(Math.random() * 3 - 1);
         this.energy = 8;
         this.cosectentEating = 0;
     }
@@ -61,6 +62,14 @@ module.exports = class Grassfresser extends Lebewesen {
             this.cosectentEating = 0;
         }
 
+    }
+
+    getGender(){
+        if(this.female == 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     die() {

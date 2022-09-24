@@ -35,6 +35,7 @@ const Wisard = require("./wizardClass");
 
 matrix = [];
 function getRandMatrix(x, y){
+    let newMatrix = [];
     for (let i = 0; i < y; i++){
         let arr = [];
         for (let j = 0; j < x; j++){
@@ -67,8 +68,9 @@ function getRandMatrix(x, y){
             }
 
         }
-        matrix.push(arr)
+        newMatrix.push(arr)
     }
+    matrix = newMatrix;
     for (let i = 0; i < matrix.length / 20 + matrix[0].length / 20; i++){
         let xW = Math.floor(Math.random() * matrix[0].length);
         let yW = Math.floor(Math.random() * matrix.length);
@@ -86,12 +88,14 @@ grassfresserArr = [];
 fleischFresserArr = [];
 wizardArr = [];
 
+matrixXsize = 50;
+matrixYsize = 50
 
-
+isRaining = false;
 
 
 function setup(){
-    getRandMatrix(50, 50);
+    getRandMatrix(matrixXsize, matrixYsize);
     
     for (let y = 0; y < matrix.length; y++){
         for (let x = 0; x < matrix[y].length; x++){
@@ -136,16 +140,54 @@ function draw(){
     for (let i in mutandgrassArr){
         mutandgrassArr[i].spread();
     }
-    
+
+    if (Math.floor(Math.random() * 11) == 10){
+        isRaining = !isRaining;
+    }
+
+    io.sockets.emit("send rain", isRaining);
     io.sockets.emit("send matrix", matrix);
     //console.log(matrix);
 }
 
+function clearMatrix(){
+    console.log("log clear");
+    let matrixNew = [];
+    for (let i = 0; i < matrixYsize; i++){
+        let arr = [];
+        for (let j = 0; j < matrixXsize; j++){
+            arr.push(0);  
+        }
+        matrixNew.push(arr)
+    }
+    matrix = matrixNew;
 
-io.on("conection", function(socket){
-    console.log("Client connected", socket);
+    grassArr = [];
+    mutandgrassArr = [];
+    grassfresserArr = [];
+    fleischFresserArr = [];
+    wizardArr = [];
+}
+
+function getNewRandMatrix(){
+    console.log("log new matrix");
+    clearMatrix();
+    setup();
+}
+
+io.on("connection", function(socket){
     io.sockets.emit("first send matrix", matrix);
+
+    socket.on('clear Matrix', function(socket){
+        clearMatrix();
+    });
+    
+    socket.on("get New Rand Matrix", function(data){
+        getNewRandMatrix();
+    });
 });
+
+
 
 setup();
 setInterval(draw, 1000);
